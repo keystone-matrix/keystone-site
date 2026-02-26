@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Buyer Interest | Keystone Matrix Properties LLC</title>
+  <meta name="description" content="Buyer registration and buy box for land opportunities." />
+  <style>
+    :root{--bg:#fff;--ink:#151515;--muted:#4b4b4b;--line:#e9e6df;--card:#fbfaf7;--gold:#b8912e;--radius:16px;--max:920px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+    a{color:inherit}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
+    .top{border-bottom:1px solid var(--line);background:#fff}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0}
+    .nav img{height:42px;width:auto}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;text-decoration:none;font-weight:650}
+    .btn.primary{border-color:rgba(184,145,46,.45);background:linear-gradient(180deg,#fff 0%,#fff 55%,rgba(184,145,46,.07) 100%)}
+    h1{margin:18px 0 6px;font-size:28px;letter-spacing:-.2px}
+    .muted{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin:14px 0}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media (max-width:760px){.grid{grid-template-columns:1fr}}
+    label{display:block;font-size:13px;font-weight:700;margin:10px 0 6px}
+    input,select,textarea{
+      width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;
+      font:inherit
+    }
+    textarea{min-height:110px;resize:vertical}
+    .sectiontitle{margin:0 0 6px;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:800}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 34px}
+    .note{font-size:13px;color:var(--muted)}
+    .ok{display:none;margin-top:12px;padding:12px;border-radius:12px;border:1px solid rgba(31,138,77,.25);background:rgba(31,138,77,.06)}
+    .err{display:none;margin-top:12px;padding:12px;border-radius:12px;border:1px solid rgba(176,0,32,.25);background:rgba(176,0,32,.06)}
+    .chip{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;margin:6px 6px 0 0;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="wrap">
+      <div class="nav">
+        <a href="/"><img src="/assets/logo.png" alt="Keystone Matrix Properties LLC"></a>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;">
+          <a class="btn" href="/seller/">Seller Form</a>
+          <a class="btn primary" href="/">Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <h1>Buyer Interest / Buy Box</h1>
+    <p class="muted">Submit your land buy box so we can route opportunities that match your criteria.</p>
+
+    <div class="note">
+      <span class="chip">Land only</span>
+      <span class="chip">Email distribution</span>
+      <span class="chip">Manual approval / structured assignments</span>
+    </div>
+
+    <form id="buyerForm" class="card" method="post" action="/api/buyers">
+      <p class="sectiontitle">Buyer</p>
+      <div class="grid">
+        <div>
+          <label for="buyer_name">Full name *</label>
+          <input id="buyer_name" name="buyer_name" required />
+        </div>
+        <div>
+          <label for="buyer_phone">Phone *</label>
+          <input id="buyer_phone" name="buyer_phone" required inputmode="tel" placeholder="(###) ###-####" />
+        </div>
+        <div>
+          <label for="buyer_email">Email *</label>
+          <input id="buyer_email" name="buyer_email" required type="email" placeholder="you@company.com" />
+        </div>
+        <div>
+          <label for="buyer_company">Company / Entity (optional)</label>
+          <input id="buyer_company" name="buyer_company" placeholder="LLC / Company name" />
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid var(--line);margin:16px 0;">
+
+      <p class="sectiontitle">Markets</p>
+      <div class="grid">
+        <div>
+          <label for="states">States you buy in *</label>
+          <input id="states" name="states" required placeholder="e.g., FL, GA, TX" />
+        </div>
+        <div>
+          <label for="counties">Counties (optional)</label>
+          <input id="counties" name="counties" placeholder="Optional (comma-separated)" />
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid var(--line);margin:16px 0;">
+
+      <p class="sectiontitle">Numbers</p>
+      <div class="grid">
+        <div>
+          <label for="price_min">Purchase price min *</label>
+          <input id="price_min" name="price_min" required placeholder="e.g., 20000" inputmode="numeric" />
+        </div>
+        <div>
+          <label for="price_max">Purchase price max *</label>
+          <input id="price_max" name="price_max" required placeholder="e.g., 150000" inputmode="numeric" />
+        </div>
+        <div>
+          <label for="acres_min">Acres min *</label>
+          <input id="acres_min" name="acres_min" required placeholder="e.g., 1" inputmode="decimal" />
+        </div>
+        <div>
+          <label for="acres_max">Acres max *</label>
+          <input id="acres_max" name="acres_max" required placeholder="e.g., 40" inputmode="decimal" />
+        </div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label for="close_speed">Close speed</label>
+          <select id="close_speed" name="close_speed">
+            <option value="" selected>Optional</option>
+            <option>0–7 days</option>
+            <option>14 days</option>
+            <option>30 days</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+        <div>
+          <label for="assignments">Assignments accepted? *</label>
+          <select id="assignments" name="assignments" required>
+            <option value="" selected disabled>Select</option>
+            <option>Yes</option>
+            <option>No</option>
+            <option>Case-by-case</option>
+          </select>
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid var(--line);margin:16px 0;">
+
+      <p class="sectiontitle">Requirements</p>
+      <div class="grid">
+        <div>
+          <label for="legal_access_req">Legal access required? *</label>
+          <select id="legal_access_req" name="legal_access_req" required>
+            <option value="" selected disabled>Select</option>
+            <option>Required</option>
+            <option>Case-by-case</option>
+          </select>
+        </div>
+        <div>
+          <label for="flood_tolerance">Floodplain tolerance</label>
+          <select id="flood_tolerance" name="flood_tolerance">
+            <option value="" selected>Optional</option>
+            <option>No</option><option>Case-by-case</option><option>Yes</option>
+          </select>
+        </div>
+        <div>
+          <label for="hoa_tolerance">HOA tolerance</label>
+          <select id="hoa_tolerance" name="hoa_tolerance">
+            <option value="" selected>Optional</option>
+            <option>No</option><option>Case-by-case</option><option>Yes</option>
+          </select>
+        </div>
+        <div>
+          <label for="utilities_pref">Utilities preference</label>
+          <select id="utilities_pref" name="utilities_pref">
+            <option value="" selected>Optional</option>
+            <option>Not required</option>
+            <option>Power preferred</option>
+            <option>Power + water preferred</option>
+            <option>Utilities required</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="buyer_notes">Notes / deal-breakers</label>
+      <textarea id="buyer_notes" name="buyer_notes" placeholder="Optional: zoning, terrain, use-case, restrictions, etc."></textarea>
+
+      <!-- spam trap -->
+      <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true">
+
+      <div class="actions">
+        <button class="btn primary" type="submit">Register Buy Box</button>
+        <a class="btn" href="/">Back to Home</a>
+      </div>
+
+      <div class="note">We review and route opportunities by fit. Reply to deal emails to request assignment details.</div>
+      <div id="ok" class="ok"><strong>Submitted.</strong> You’re on file. We’ll reach out when opportunities match your buy box.</div>
+      <div id="err" class="err"><strong>Something went wrong.</strong> Please try again or email <a href="mailto:info@keystonematrix.com">info@keystonematrix.com</a>.</div>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('buyerForm');
+    const ok = document.getElementById('ok');
+    const err = document.getElementById('err');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      ok.style.display = 'none';
+      err.style.display = 'none';
+
+      const fd = new FormData(form);
+      const res = await fetch(form.action, { method: 'POST', body: fd });
+
+      if (res.ok) {
+        form.reset();
+        ok.style.display = 'block';
+        ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        err.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
