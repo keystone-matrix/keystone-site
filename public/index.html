@@ -40,7 +40,7 @@
       gap:16px; padding:14px 0;
     }
     .brand{
-      display:flex; align-items:center; gap:12px; min-width: 220px;
+      display:flex; align-items:center; gap:12px; min-width:220px;
     }
     .brand img{height:44px; width:auto; display:block}
     .navlinks{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
@@ -52,6 +52,7 @@
       text-decoration:none;
       font-weight:600;
       letter-spacing:.2px;
+      transition:transform .15s ease, box-shadow .15s ease;
     }
     .btn.primary{
       border-color: rgba(184,145,46,.45);
@@ -68,31 +69,31 @@
     }
     .hero-grid{
       display:grid; gap:22px;
-      grid-template-columns: 1.25fr .75fr;
+      grid-template-columns:1.25fr .75fr;
       align-items:stretch;
     }
     @media (max-width: 900px){
-      .hero-grid{grid-template-columns: 1fr}
+      .hero-grid{grid-template-columns:1fr}
     }
     h1{
       margin:0;
-      font-size: clamp(28px, 3.4vw, 46px);
+      font-size:clamp(28px, 3.4vw, 46px);
       line-height:1.1;
       letter-spacing:-.4px;
     }
     .sub{
       margin:12px 0 0;
       color:var(--muted);
-      font-size: 16px;
-      max-width: 62ch;
+      font-size:16px;
+      max-width:62ch;
     }
     .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
     .card{
-      background: var(--card);
+      background:var(--card);
       border:1px solid var(--line);
-      border-radius: var(--radius);
+      border-radius:var(--radius);
       padding:18px;
-      box-shadow: var(--shadow);
+      box-shadow:var(--shadow);
     }
     .card h3{margin:0 0 8px; font-size:16px}
     .pillrow{
@@ -102,13 +103,13 @@
       padding:8px 10px; border-radius:999px;
       border:1px solid var(--line);
       background:#fff;
-      font-size: 13px;
+      font-size:13px;
       color:#2f2f2f;
     }
     .section{padding:36px 0}
     .grid3{
       display:grid; gap:14px;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns:repeat(3, 1fr);
     }
     @media (max-width: 900px){ .grid3{grid-template-columns:1fr} }
     .kicker{
@@ -116,7 +117,7 @@
       letter-spacing:.12em; text-transform:uppercase; font-size:12px;
       margin:0 0 10px;
     }
-    h2{margin:0; font-size: 22px; letter-spacing:-.2px}
+    h2{margin:0; font-size:22px; letter-spacing:-.2px}
     .muted{color:var(--muted)}
     .steps{display:grid; gap:12px; margin-top:14px}
     .step{
@@ -134,17 +135,17 @@
     footer{
       border-top:1px solid var(--line);
       padding:26px 0;
-      background: #fff;
+      background:#fff;
     }
     .footergrid{
       display:grid; gap:16px;
-      grid-template-columns: 1.2fr .8fr;
+      grid-template-columns:1.2fr .8fr;
       align-items:start;
     }
     @media (max-width: 900px){ .footergrid{grid-template-columns:1fr} }
     .contactline{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:8px}
-    .small{font-size: 13px; color: var(--muted)}
-    .goldline{height:1px; background: linear-gradient(90deg, transparent, rgba(184,145,46,.55), transparent); margin-top:12px}
+    .small{font-size:13px; color:var(--muted)}
+    .goldline{height:1px; background:linear-gradient(90deg, transparent, rgba(184,145,46,.55), transparent); margin-top:12px}
   </style>
 </head>
 <body>
@@ -219,8 +220,8 @@
       <div class="wrap">
         <p class="kicker">What we do</p>
         <h2>Land acquisition workflow built for speed and clarity.</h2>
-        <p class="muted" style="margin:10px 0 0; max-width: 85ch;">
-          We work directly with landowners and qualified buyers. When appropriate, we structure assignments under contract
+        <p class="muted" style="margin:10px 0 0; max-width:85ch;">
+          We work directly with landowners and qualified buyers. When appropriate, we structure assignments under written agreements
           so transactions remain organized, transparent, and executable through a standard title closing.
         </p>
 
@@ -228,7 +229,7 @@
           <div class="card">
             <h3>Acquire</h3>
             <p class="muted" style="margin:0;">
-              We review land details, verify key constraints (access, utilities, taxes, restrictions), and structure clear offer terms.
+              We review land details, verify key constraints such as access, utilities, taxes, and restrictions, and structure clear next steps.
             </p>
           </div>
           <div class="card">
@@ -247,7 +248,7 @@
       </div>
     </section>
 
-    <section class="section" style="background: linear-gradient(180deg, #fff 0%, #fbfaf7 100%); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <section class="section" style="background:linear-gradient(180deg, #fff 0%, #fbfaf7 100%); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
       <div class="wrap">
         <p class="kicker">Process</p>
         <h2>How it works</h2>
@@ -255,7 +256,7 @@
           <div class="step"><div class="badge">1</div><div><strong>Submit details</strong><div class="small">Use the seller intake form so we can evaluate quickly.</div></div></div>
           <div class="step"><div class="badge">2</div><div><strong>Review &amp; underwrite</strong><div class="small">We validate key deal factors and follow up only for essentials.</div></div></div>
           <div class="step"><div class="badge">3</div><div><strong>Clear terms</strong><div class="small">If it fits, we propose documented terms and a closing timeline.</div></div></div>
-          <div class="step"><div class="badge">4</div><div><strong>Contract &amp; closing</strong><div class="small">Transactions are executed through standard title/closing processes.</div></div></div>
+          <div class="step"><div class="badge">4</div><div><strong>Contract &amp; closing</strong><div class="small">Transactions are executed through standard title and closing processes.</div></div></div>
         </div>
       </div>
     </section>
@@ -264,7 +265,7 @@
       <div class="wrap">
         <p class="kicker">Mission</p>
         <h2>Trust through structure.</h2>
-        <p class="muted" style="margin:10px 0 0; max-width: 90ch;">
+        <p class="muted" style="margin:10px 0 0; max-width:90ch;">
           Keystone Matrix Properties LLC operates as a structured land acquisition firm.
           We focus exclusively on land transactions and assignments, maintaining clear communication, defined expectations,
           and efficient execution throughout each transaction.
