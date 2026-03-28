@@ -15,51 +15,80 @@
       --card:#fbfaf7;
       --gold:#b8912e;
       --gold2:#d8b34a;
-      --shadow: 0 10px 30px rgba(0,0,0,.06);
-      --radius: 16px;
-      --max: 1120px;
+      --shadow:0 10px 30px rgba(0,0,0,.06);
+      --radius:16px;
+      --max:1120px;
     }
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
+      font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
       color:var(--ink);
       background:var(--bg);
       line-height:1.5;
     }
     a{color:inherit}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
+
     .topbar{
-      position:sticky; top:0; z-index:20;
+      position:sticky;
+      top:0;
+      z-index:20;
       background:rgba(255,255,255,.92);
-      backdrop-filter: blur(10px);
+      backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);
     }
     .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:16px; padding:14px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
     }
     .brand{
-      display:flex; align-items:center; gap:12px; min-width:220px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:220px;
     }
-    .brand img{height:44px; width:auto; display:block}
-    .navlinks{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .brand img{
+      height:44px;
+      width:auto;
+      display:block;
+    }
+    .navlinks{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
     .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:10px 14px; border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:999px;
       border:1px solid var(--line);
       background:#fff;
       text-decoration:none;
       font-weight:600;
       letter-spacing:.2px;
-      transition:transform .15s ease, box-shadow .15s ease;
-    }
-    .btn.primary{
-      border-color: rgba(184,145,46,.45);
-      background: linear-gradient(180deg, #fff 0%, #fff 55%, rgba(184,145,46,.07) 100%);
-      box-shadow: 0 6px 18px rgba(184,145,46,.12);
+      transition:transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
     }
     .btn:hover{transform:translateY(-1px)}
+
+    .btn-gold{
+      border:1px solid rgba(184,145,46,.45);
+      background:linear-gradient(180deg, #fff 0%, #fff 55%, rgba(184,145,46,.07) 100%);
+      box-shadow:0 6px 18px rgba(184,145,46,.12);
+    }
+    .btn-gold:hover{
+      background:rgba(184,145,46,.08);
+    }
+
     .hero{
       padding:56px 0 28px;
       background:
@@ -68,13 +97,15 @@
       border-bottom:1px solid var(--line);
     }
     .hero-grid{
-      display:grid; gap:22px;
+      display:grid;
+      gap:22px;
       grid-template-columns:1.25fr .75fr;
       align-items:stretch;
     }
-    @media (max-width: 900px){
+    @media (max-width:900px){
       .hero-grid{grid-template-columns:1fr}
     }
+
     h1{
       margin:0;
       font-size:clamp(28px, 3.4vw, 46px);
@@ -87,7 +118,13 @@
       font-size:16px;
       max-width:62ch;
     }
-    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+    .cta-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
     .card{
       background:var(--card);
       border:1px solid var(--line);
@@ -96,56 +133,100 @@
       box-shadow:var(--shadow);
     }
     .card h3{margin:0 0 8px; font-size:16px}
-    .pillrow{
-      display:flex; gap:10px; flex-wrap:wrap; margin-top:14px
-    }
-    .pill{
-      padding:8px 10px; border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      font-size:13px;
+
+    .feature-list{
+      list-style:none;
+      padding:0;
+      margin:16px 0 0;
       color:#2f2f2f;
     }
+    .feature-list li{
+      margin-bottom:8px;
+      font-size:15px;
+    }
+
     .section{padding:36px 0}
     .grid3{
-      display:grid; gap:14px;
+      display:grid;
+      gap:14px;
       grid-template-columns:repeat(3, 1fr);
     }
-    @media (max-width: 900px){ .grid3{grid-template-columns:1fr} }
+    @media (max-width:900px){
+      .grid3{grid-template-columns:1fr}
+    }
+
     .kicker{
-      font-weight:700; color:var(--gold);
-      letter-spacing:.12em; text-transform:uppercase; font-size:12px;
+      font-weight:700;
+      color:var(--gold);
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:12px;
       margin:0 0 10px;
     }
-    h2{margin:0; font-size:22px; letter-spacing:-.2px}
+    h2{
+      margin:0;
+      font-size:22px;
+      letter-spacing:-.2px;
+    }
     .muted{color:var(--muted)}
-    .steps{display:grid; gap:12px; margin-top:14px}
+    .steps{
+      display:grid;
+      gap:12px;
+      margin-top:14px;
+    }
     .step{
-      display:flex; gap:12px; align-items:flex-start;
-      padding:14px; border:1px solid var(--line); border-radius:14px; background:#fff;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
     }
     .badge{
-      width:30px; height:30px; border-radius:9px;
-      display:flex; align-items:center; justify-content:center;
-      background: rgba(184,145,46,.12);
+      width:30px;
+      height:30px;
+      border-radius:9px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(184,145,46,.12);
       border:1px solid rgba(184,145,46,.28);
-      font-weight:800; color:#6a4f11;
+      font-weight:800;
+      color:#6a4f11;
       flex:0 0 auto;
     }
+
     footer{
       border-top:1px solid var(--line);
       padding:26px 0;
       background:#fff;
     }
     .footergrid{
-      display:grid; gap:16px;
+      display:grid;
+      gap:16px;
       grid-template-columns:1.2fr .8fr;
       align-items:start;
     }
-    @media (max-width: 900px){ .footergrid{grid-template-columns:1fr} }
-    .contactline{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:8px}
-    .small{font-size:13px; color:var(--muted)}
-    .goldline{height:1px; background:linear-gradient(90deg, transparent, rgba(184,145,46,.55), transparent); margin-top:12px}
+    @media (max-width:900px){
+      .footergrid{grid-template-columns:1fr}
+    }
+    .contactline{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:8px;
+    }
+    .small{
+      font-size:13px;
+      color:var(--muted);
+    }
+    .goldline{
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(184,145,46,.55), transparent);
+      margin-top:12px;
+    }
   </style>
 </head>
 <body>
@@ -156,9 +237,9 @@
           <img src="/assets/logo.png" alt="Keystone Matrix Properties LLC" />
         </div>
         <div class="navlinks">
-          <a class="btn primary" href="/seller/">Submit Land</a>
-          <a class="btn" href="/buyers/">Join Buyer List</a>
-          <a class="btn" href="#contact">Contact</a>
+          <a class="btn btn-gold" href="/seller/">Submit Land</a>
+          <a class="btn btn-gold" href="/buyers/">Join Buyer List</a>
+          <a class="btn btn-gold" href="#contact">Contact</a>
         </div>
       </div>
     </div>
@@ -175,15 +256,15 @@
             clear communication, and documented terms — creating predictable, professional outcomes for sellers and qualified buyers.
           </p>
           <div class="cta-row">
-            <a class="btn primary" href="/seller/">Submit Land for Review</a>
-            <a class="btn" href="/buyers/">Buyer Interest / Buy Box</a>
+            <a class="btn btn-gold" href="/seller/">Submit Land for Review</a>
+            <a class="btn btn-gold" href="/buyers/">Buyer Interest / Buy Box</a>
           </div>
-          <div class="pillrow">
-            <span class="pill">Clear process</span>
-            <span class="pill">No-pressure communication</span>
-            <span class="pill">Documented terms</span>
-            <span class="pill">Land assignments when appropriate</span>
-          </div>
+          <ul class="feature-list" aria-label="Core benefits">
+            <li>Clear process</li>
+            <li>No-pressure communication</li>
+            <li>Documented terms</li>
+            <li>Land assignments when appropriate</li>
+          </ul>
           <div class="goldline"></div>
         </div>
 
@@ -198,7 +279,7 @@
               <div>
                 <div style="font-weight:700;">Sellers</div>
                 <div class="small">Submit parcel/APN, acreage, access, utilities, taxes, asking price, and timeline.</div>
-                <div style="margin-top:10px;"><a class="btn primary" href="/seller/">Go to Seller Intake</a></div>
+                <div style="margin-top:10px;"><a class="btn btn-gold" href="/seller/">Go to Seller Intake</a></div>
               </div>
             </div>
             <div class="step">
@@ -206,7 +287,7 @@
               <div>
                 <div style="font-weight:700;">Buyers</div>
                 <div class="small">Submit your buy box so we can match opportunities to your criteria.</div>
-                <div style="margin-top:10px;"><a class="btn" href="/buyers/">Go to Buyer Form</a></div>
+                <div style="margin-top:10px;"><a class="btn btn-gold" href="/buyers/">Go to Buyer Form</a></div>
               </div>
             </div>
           </div>
@@ -282,13 +363,13 @@
           <div class="contactline">
             <span class="small"><strong>Email:</strong> <a href="mailto:info@keystonematrix.com">info@keystonematrix.com</a></span>
             <span class="small">•</span>
-            <span class="small"><strong>Phone:</strong> <a href="tel:+14069252472">406-925-2472</a></span>
+            <span class="small"><strong>Phone:</strong> <a href="tel:8632253455">(863) 225-3455</a></span>
           </div>
           <div class="small" style="margin-top:10px;">© <span id="y"></span> Keystone Matrix Properties LLC. All rights reserved.</div>
         </div>
         <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-          <a class="btn primary" href="/seller/">Submit Land</a>
-          <a class="btn" href="/buyers/">Join Buyer List</a>
+          <a class="btn btn-gold" href="/seller/">Submit Land</a>
+          <a class="btn btn-gold" href="/buyers/">Join Buyer List</a>
         </div>
       </div>
     </div>
