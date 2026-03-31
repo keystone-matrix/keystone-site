@@ -5,254 +5,148 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Seller Intake | Keystone Matrix Properties LLC</title>
   <meta name="description" content="Land seller intake form for Keystone Matrix Properties LLC." />
-  <style>
-    :root{--bg:#fff;--ink:#151515;--muted:#4b4b4b;--line:#e9e6df;--card:#fbfaf7;--gold:#b8912e;--radius:16px;--max:920px}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
-    a{color:inherit}
-    .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
-    .top{border-bottom:1px solid var(--line);background:#fff}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0}
-    .nav img{height:42px;width:auto}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;text-decoration:none;font-weight:650}
-    .btn.primary{border-color:rgba(184,145,46,.45);background:linear-gradient(180deg,#fff 0%,#fff 55%,rgba(184,145,46,.07) 100%)}
-    h1{margin:18px 0 6px;font-size:28px;letter-spacing:-.2px}
-    .muted{color:var(--muted)}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin:14px 0}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    @media (max-width:760px){.grid{grid-template-columns:1fr}}
-    label{display:block;font-size:13px;font-weight:700;margin:10px 0 6px}
-    input,select,textarea{
-      width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;
-      font:inherit
-    }
-    textarea{min-height:110px;resize:vertical}
-    .sectiontitle{margin:0 0 6px;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:800}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 34px}
-    .note{font-size:13px;color:var(--muted)}
-    .ok{display:none;margin-top:12px;padding:12px;border-radius:12px;border:1px solid rgba(31,138,77,.25);background:rgba(31,138,77,.06)}
-    .err{display:none;margin-top:12px;padding:12px;border-radius:12px;border:1px solid rgba(176,0,32,.25);background:rgba(176,0,32,.06)}
-  </style>
+  <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
-  <div class="top">
-    <div class="wrap">
-      <div class="nav">
-        <a href="/"><img src="/assets/logo.png" alt="Keystone Matrix Properties LLC"></a>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;">
-          <a class="btn" href="/buyers/">Buyer Form</a>
-          <a class="btn primary" href="/">Home</a>
-        </div>
-      </div>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="/">
+        <img src="/assets/logo.png" alt="Keystone Matrix Properties LLC" />
+      </a>
+
+      <nav class="navlinks" aria-label="Primary">
+        <a class="btn btn-gold" href="/buyers/">Buyer Form</a>
+        <a class="btn btn-gold" href="/">Home</a>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <main class="wrap">
-    <h1>Land Seller Intake</h1>
-    <p class="muted">Provide the details below so we can evaluate efficiently and follow up only for essentials.</p>
+  <main class="wrap page-wrap">
+    <section class="page-head">
+      <p class="kicker">Seller intake</p>
+      <h1>Land Seller Intake</h1>
+      <p class="muted">Provide the details below so we can evaluate efficiently and follow up only for essentials.</p>
+    </section>
 
-    <form id="sellerForm" class="card" method="post" action="/api/seller">
-      <p class="sectiontitle">Seller</p>
-      <div class="grid">
-        <div>
-          <label for="seller_name">Full name *</label>
-          <input id="seller_name" name="seller_name" required />
-        </div>
-        <div>
-          <label for="seller_phone">Phone *</label>
-          <input id="seller_phone" name="seller_phone" inputmode="tel" required placeholder="406-925-2472" />
-        </div>
-        <div>
-          <label for="seller_email">Email</label>
-          <input id="seller_email" name="seller_email" type="email" placeholder="you@example.com" />
-        </div>
-        <div>
-          <label for="is_owner">Are you the owner? *</label>
-          <select id="is_owner" name="is_owner" required>
-            <option value="" selected disabled>Select</option>
-            <option>Yes</option><option>No</option>
-          </select>
-        </div>
-      </div>
+    <section class="card form-card">
+      <p class="helper"><strong>Deal ID:</strong> <span id="dealIdDisplay">Assigned after submission</span></p>
 
-      <label for="other_decision_makers">Other decision makers (if any)</label>
-      <input id="other_decision_makers" name="other_decision_makers" placeholder="Names/roles (optional)" />
+      <form id="sellerForm" method="POST" target="hidden_iframe" autocomplete="on" novalidate>
+        <iframe name="hidden_iframe" id="hidden_iframe" class="hidden-frame"></iframe>
 
-      <hr style="border:none;border-top:1px solid var(--line);margin:16px 0;">
+        <input type="hidden" name="source" value="website_seller_form" />
+        <input type="hidden" name="submitted_at_local" id="submitted_at_local" value="" />
 
-      <p class="sectiontitle">Property</p>
-      <div class="grid">
-        <div>
-          <label for="state">State *</label>
-          <input id="state" name="state" required placeholder="e.g., Florida" />
-        </div>
-        <div>
-          <label for="county">County *</label>
-          <input id="county" name="county" required placeholder="e.g., Polk" />
-        </div>
-        <div>
-          <label for="apn">Parcel / APN *</label>
-          <input id="apn" name="apn" required />
-        </div>
-        <div>
-          <label for="acres">Acres *</label>
-          <input id="acres" name="acres" required inputmode="decimal" placeholder="e.g., 10" />
-        </div>
-      </div>
+        <p class="sectiontitle">Seller</p>
+        <div class="grid two">
+          <div class="field">
+            <label for="owner_name">Full name *</label>
+            <input id="owner_name" name="owner_name" required />
+          </div>
 
-      <label for="location">Property address / nearest road + town *</label>
-      <input id="location" name="location" required placeholder="Enough to locate the parcel" />
+          <div class="field">
+            <label for="owner_phone">Phone *</label>
+            <input id="owner_phone" name="owner_phone" inputmode="tel" required placeholder="(863) 225-3455" />
+          </div>
 
-      <div class="grid">
-        <div>
-          <label for="road_access">Road access type</label>
-          <select id="road_access" name="road_access">
-            <option value="" selected>Unknown</option>
-            <option>Paved</option><option>Gravel</option><option>Dirt</option><option>None</option>
-          </select>
-        </div>
-        <div>
-          <label for="legal_access">Legal access? *</label>
-          <select id="legal_access" name="legal_access" required>
-            <option value="" selected disabled>Select</option>
-            <option>Yes</option><option>No</option><option>Unknown</option>
-          </select>
-        </div>
-      </div>
+          <div class="field">
+            <label for="owner_email">Email *</label>
+            <input id="owner_email" name="owner_email" type="email" required placeholder="you@example.com" />
+          </div>
 
-      <div class="grid">
-        <div>
-          <label for="power">Power</label>
-          <select id="power" name="power">
-            <option value="" selected>Unknown</option>
-            <option>On site</option><option>Nearby</option><option>None</option>
-          </select>
+          <div class="field">
+            <label for="property_state">State *</label>
+            <input id="property_state" name="property_state" required placeholder="e.g. Florida" />
+          </div>
         </div>
-        <div>
-          <label for="water">Water</label>
-          <select id="water" name="water">
-            <option value="" selected>Unknown</option>
-            <option>Well</option><option>City</option><option>None</option>
-          </select>
-        </div>
-        <div>
-          <label for="sewer">Sewer</label>
-          <select id="sewer" name="sewer">
-            <option value="" selected>Unknown</option>
-            <option>Septic</option><option>City</option><option>None</option>
-          </select>
-        </div>
-        <div>
-          <label for="zoning">Zoning (if known)</label>
-          <input id="zoning" name="zoning" placeholder="Optional" />
-        </div>
-      </div>
 
-      <div class="grid">
-        <div>
-          <label for="hoa">HOA?</label>
-          <select id="hoa" name="hoa">
-            <option value="" selected>Unknown</option>
-            <option>No</option><option>Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="floodplain">Floodplain?</label>
-          <select id="floodplain" name="floodplain">
-            <option value="" selected>Unknown</option>
-            <option>No</option><option>Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="taxes">Annual property taxes (if known)</label>
-          <input id="taxes" name="taxes" placeholder="Optional" />
-        </div>
-        <div>
-          <label for="title_status">Free & clear / liens?</label>
-          <select id="title_status" name="title_status">
-            <option value="" selected>Unknown</option>
-            <option>Free & clear</option>
-            <option>Mortgage/Lien</option>
-            <option>Back taxes</option>
-            <option>Other / Not sure</option>
-          </select>
-        </div>
-      </div>
+        <hr class="rule" />
 
-      <hr style="border:none;border-top:1px solid var(--line);margin:16px 0;">
+        <p class="sectiontitle">Property</p>
+        <div class="grid two">
+          <div class="field">
+            <label for="property_county">County *</label>
+            <input id="property_county" name="property_county" required placeholder="e.g. Polk" />
+          </div>
 
-      <p class="sectiontitle">Deal Terms</p>
-      <div class="grid">
-        <div>
-          <label for="asking_price">Asking price</label>
-          <input id="asking_price" name="asking_price" placeholder="Optional" />
+          <div class="field">
+            <label for="property_city">City / nearest town *</label>
+            <input id="property_city" name="property_city" required placeholder="e.g. Lakeland" />
+          </div>
+
+          <div class="field">
+            <label for="parcel_apn">Parcel / APN *</label>
+            <input id="parcel_apn" name="parcel_apn" required />
+          </div>
+
+          <div class="field">
+            <label for="acreage">Acreage *</label>
+            <input id="acreage" name="acreage" required inputmode="decimal" placeholder="e.g. 1.25" />
+          </div>
         </div>
-        <div>
-          <label for="min_price">Minimum acceptable price</label>
-          <input id="min_price" name="min_price" placeholder="Optional" />
+
+        <div class="field">
+          <label for="property_address">Property address / nearest road *</label>
+          <input id="property_address" name="property_address" required placeholder="Enough to locate the parcel" />
         </div>
-        <div>
-          <label for="timeline">Timeline *</label>
-          <select id="timeline" name="timeline" required>
-            <option value="" selected disabled>Select</option>
-            <option>ASAP</option><option>30 days</option><option>60+ days</option><option>Flexible</option>
-          </select>
+
+        <div class="grid two">
+          <div class="field">
+            <label for="utilities">Utilities</label>
+            <select id="utilities" name="utilities">
+              <option value="unknown" selected>Unknown</option>
+              <option value="none">None</option>
+              <option value="nearby">Nearby</option>
+              <option value="on_site">On site</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="road_access">Road access *</label>
+            <select id="road_access" name="road_access" required>
+              <option value="" selected disabled>Select</option>
+              <option value="paved">Paved</option>
+              <option value="gravel">Gravel</option>
+              <option value="dirt">Dirt</option>
+              <option value="none">None</option>
+              <option value="unknown">Unknown</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="hoa">HOA</label>
+            <select id="hoa" name="hoa">
+              <option value="unknown" selected>Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="asking_price">Asking price</label>
+            <input id="asking_price" name="asking_price" inputmode="decimal" placeholder="Optional" />
+          </div>
         </div>
-        <div>
-          <label for="reason">Reason for selling</label>
-          <select id="reason" name="reason">
-            <option value="" selected>Optional</option>
-            <option>No longer need it</option>
-            <option>Inherited</option>
-            <option>Taxes/Carrying cost</option>
-            <option>Relocating</option>
-            <option>Other</option>
-          </select>
+
+        <div class="field">
+          <label for="notes">Notes</label>
+          <textarea id="notes" name="notes" placeholder="Anything important we should know (access issues, restrictions, taxes, timing, restrictions, etc.)"></textarea>
         </div>
-      </div>
 
-      <label for="notes">Notes</label>
-      <textarea id="notes" name="notes" placeholder="Anything important we should know (access issues, restrictions, etc.)"></textarea>
+        <div class="actions">
+          <button id="submitBtn" class="btn btn-gold" type="submit">Submit for Review</button>
+          <a class="btn btn-gold" href="/">Back to Home</a>
+        </div>
 
-      <!-- Basic spam trap (bots will fill this; humans won't) -->
-      <input type="text" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true">
-
-      <div class="actions">
-        <button class="btn primary" type="submit">Submit for Review</button>
-        <a class="btn" href="/">Back to Home</a>
-      </div>
-
-      <div class="note">This form is for land only. Submissions are reviewed before any opportunity is shared with buyers.</div>
-      <div id="ok" class="ok"><strong>Submitted.</strong> We received your details and will follow up if anything critical is missing.</div>
-      <div id="err" class="err"><strong>Something went wrong.</strong> Please try again or email <a href="mailto:info@keystonematrix.com">info@keystonematrix.com</a>.</div>
-    </form>
+        <div class="note">This form is for land only. Submissions are reviewed before any opportunity is shared with buyers.</div>
+        <p id="formStatus" class="helper status-text"></p>
+      </form>
+    </section>
   </main>
 
   <script>
-    const form = document.getElementById('sellerForm');
-    const ok = document.getElementById('ok');
-    const err = document.getElementById('err');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      ok.style.display = 'none';
-      err.style.display = 'none';
-
-      const fd = new FormData(form);
-      const res = await fetch(form.action, { method: 'POST', body: fd });
-
-      if (res.ok) {
-        form.reset();
-        ok.style.display = 'block';
-        ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else {
-        err.style.display = 'block';
-      }
-    });
- <script>
-  window.KM_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzazC2SW53spHoSXiHZr7j_gdF-T1mh4TPwst5jWDfULud9R9gV8sdLnaCN40D0Nojz/exec";
-</script>
-  
-<script src="/assets/main.js"></script>
+    window.KM_WEBAPP_URL = "PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE";
+  </script>
+  <script src="/assets/main.js"></script>
 </body>
 </html>
