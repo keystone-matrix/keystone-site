@@ -29,7 +29,7 @@
     </section>
 
     <section class="card form-card">
-      <p class="helper"><strong>Deal ID:</strong> <span id="dealIdDisplay">Assigned after submission</span></p>
+      <p class="helper"><strong>Deal ID:</strong> <span id="dealIdDisplay">Assigned after confirmed submission</span></p>
 
       <form id="sellerForm" method="POST" target="hidden_iframe" autocomplete="on" novalidate>
         <iframe name="hidden_iframe" id="hidden_iframe" class="hidden-frame"></iframe>
@@ -130,7 +130,7 @@
 
         <div class="field">
           <label for="notes">Notes</label>
-          <textarea id="notes" name="notes" placeholder="Anything important we should know (access issues, restrictions, taxes, timing, restrictions, etc.)"></textarea>
+          <textarea id="notes" name="notes" placeholder="Anything important we should know (access issues, restrictions, taxes, timing, etc.)"></textarea>
         </div>
 
         <div class="actions">
