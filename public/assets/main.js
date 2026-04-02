@@ -23,22 +23,26 @@
     if (el) el.textContent = text;
   }
 
-  function setupSellerForm() {
+  function setStatus(el, msg, kind) {
+    if (!el) return;
+    el.textContent = msg || "";
+    el.classList.remove("status-success", "status-error");
+    if (kind === "success") el.classList.add("status-success");
+    if (kind === "error") el.classList.add("status-error");
+  }
+
+  function attachSellerForm() {
     const form = document.getElementById("sellerForm");
     if (!form) return;
 
     const url = window.KM_WEBAPP_URL;
-    const iframe = document.getElementById("hidden_iframe");
     const submitBtn = document.getElementById("submitBtn");
     const tsField = document.getElementById("submitted_at_local");
     const statusEl = document.getElementById("formStatus");
     const dealIdDisplay = document.getElementById("dealIdDisplay");
 
     if (!url) {
-      if (statusEl) {
-        statusEl.textContent = "Form configuration missing. Add the Apps Script Web App URL.";
-        statusEl.style.color = "#8b0000";
-      }
+      setStatus(statusEl, "Form configuration missing. Add the Apps Script Web App URL.", "error");
       return;
     }
 
@@ -47,55 +51,67 @@
     form.setAttribute("target", "hidden_iframe");
 
     let pending = false;
+    let timeoutId = null;
 
-    function setStatus(msg, isError) {
-      if (!statusEl) return;
-      statusEl.textContent = msg || "";
-      statusEl.style.color = isError ? "#8b0000" : "";
+    function clearPending() {
+      pending = false;
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+      if (submitBtn) submitBtn.disabled = false;
     }
 
-    if (iframe) {
-      iframe.addEventListener("load", function () {
-        if (!pending) return;
-        pending = false;
-        setStatus("Submitted successfully. We’ll review and follow up with next steps.", false);
-        setText("dealIdDisplay", "Created");
-        if (submitBtn) submitBtn.disabled = false;
-        form.reset();
-        if (tsField) tsField.value = "";
-      });
-    }
-
-    form.addEventListener("submit", function () {
+    form.addEventListener("submit", function (e) {
       if (!form.checkValidity()) {
-        setStatus("Please complete required fields.", true);
+        e.preventDefault();
+        setStatus(statusEl, "Please complete required fields.", "error");
         form.reportValidity();
         return;
       }
 
       if (tsField) tsField.value = nowLocalISO();
       pending = true;
-      setStatus("Submitting...", false);
       if (submitBtn) submitBtn.disabled = true;
+      setStatus(statusEl, "Submitting...", null);
+
+      timeoutId = setTimeout(function () {
+        if (!pending) return;
+        clearPending();
+        setStatus(statusEl, "Submission could not be confirmed. Check the Apps Script deployment and try again.", "error");
+      }, 15000);
+    });
+
+    window.addEventListener("message", function (event) {
+      const data = event.data;
+      if (!data || data.ns !== "keystone_matrix" || data.formType !== "seller") return;
+      if (!pending) return;
+
+      clearPending();
+
+      if (data.ok) {
+        setStatus(statusEl, "Submitted successfully. The deal was written into the sheet.", "success");
+        setText("dealIdDisplay", data.deal_id || "Created");
+        form.reset();
+        if (tsField) tsField.value = "";
+      } else {
+        setStatus(statusEl, data.error || "Submission failed.", "error");
+      }
     });
   }
 
-  function setupBuyerForm() {
+  function attachBuyerForm() {
     const form = document.getElementById("buyerForm");
     if (!form) return;
 
     const url = window.KM_WEBAPP_URL;
-    const iframe = document.getElementById("buyer_hidden_iframe");
     const submitBtn = document.getElementById("buyerSubmitBtn");
     const tsField = document.getElementById("buyer_submitted_at_local");
     const statusEl = document.getElementById("buyerFormStatus");
     const buyerIdDisplay = document.getElementById("buyerIdDisplay");
 
     if (!url) {
-      if (statusEl) {
-        statusEl.textContent = "Form configuration missing. Add the Apps Script Web App URL.";
-        statusEl.style.color = "#8b0000";
-      }
+      setStatus(statusEl, "Form configuration missing. Add the Apps Script Web App URL.", "error");
       return;
     }
 
@@ -104,36 +120,52 @@
     form.setAttribute("target", "buyer_hidden_iframe");
 
     let pending = false;
+    let timeoutId = null;
 
-    function setStatus(msg, isError) {
-      if (!statusEl) return;
-      statusEl.textContent = msg || "";
-      statusEl.style.color = isError ? "#8b0000" : "";
+    function clearPending() {
+      pending = false;
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+      if (submitBtn) submitBtn.disabled = false;
     }
 
-    if (iframe) {
-      iframe.addEventListener("load", function () {
-        if (!pending) return;
-        pending = false;
-        setStatus("Buyer criteria submitted successfully.", false);
-        setText("buyerIdDisplay", "Created");
-        if (submitBtn) submitBtn.disabled = false;
-        form.reset();
-        if (tsField) tsField.value = "";
-      });
-    }
-
-    form.addEventListener("submit", function () {
+    form.addEventListener("submit", function (e) {
       if (!form.checkValidity()) {
-        setStatus("Please complete required fields.", true);
+        e.preventDefault();
+        setStatus(statusEl, "Please complete required fields.", "error");
         form.reportValidity();
         return;
       }
 
       if (tsField) tsField.value = nowLocalISO();
       pending = true;
-      setStatus("Submitting...", false);
       if (submitBtn) submitBtn.disabled = true;
+      setStatus(statusEl, "Submitting...", null);
+
+      timeoutId = setTimeout(function () {
+        if (!pending) return;
+        clearPending();
+        setStatus(statusEl, "Submission could not be confirmed. Check the Apps Script deployment and try again.", "error");
+      }, 15000);
+    });
+
+    window.addEventListener("message", function (event) {
+      const data = event.data;
+      if (!data || data.ns !== "keystone_matrix" || data.formType !== "buyer") return;
+      if (!pending) return;
+
+      clearPending();
+
+      if (data.ok) {
+        setStatus(statusEl, "Buyer criteria submitted successfully.", "success");
+        setText("buyerIdDisplay", data.buyer_id || "Created");
+        form.reset();
+        if (tsField) tsField.value = "";
+      } else {
+        setStatus(statusEl, data.error || "Submission failed.", "error");
+      }
     });
   }
 
@@ -141,7 +173,7 @@
     const yearEl = document.getElementById("year");
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    setupSellerForm();
-    setupBuyerForm();
+    attachSellerForm();
+    attachBuyerForm();
   });
 })();
